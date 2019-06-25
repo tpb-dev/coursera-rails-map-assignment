@@ -1,0 +1,104 @@
+<div class="subjects-page col-xs-12">
+  <sd-areas sd-areas-side>
+    <div class="areas-left"
+         ng-hide="sideVM.isHidden('left')"
+         ng-class="sideVM.isHidden('right') ?'col-sm-12':'col-sm-6 col-md-5 col-lg-4'">
+      <sd-area label="Subjects"
+               position="left">
+        <sd-tabs>
+          <sd-tab label="Things">
+              <input id="bad" type="text" style="width: 100%;" placeholder="Search and press enter"/>
+
+            <sd-current-things></sd-current-things>
+              <script>
+
+                  function sorty() {
+                      var lists = $("ul.items.things li");
+                      var query = $("#bad").val();
+                      $("#bad").val("");
+                      //var taxt =  $(this).find("span")[1].innerText.toUpperCase();
+                      window.subj.refresh2({"q":query})
+                      // for(var a in lists) {
+                      //     var txt = $(a).find("span")[1].innerText;
+                      //     if(query.indexOf(txt) == 1) {
+                      //         a.style.display = "";
+                      //     } else {
+                      //         a.style.display = "none";
+                      //     }
+                      // }
+                      // $("ul.items.things li").each(function () {
+                      //
+                      // })
+                      window.mappy.clearMarkers();
+                      var currentSubjects = window.subj.getThings();
+                      console.log("the length " + currentSubjects.length);
+                      for(var i = 0; i < currentSubjects.length; i++) {
+                          window.displaySubject(currentSubjects[i]);
+                      }
+                  }
+
+                  $(function() {
+                      console.log( "ready!" );
+                      $("#bad").keypress(function(event){
+                          var keycode = (event.keyCode ? event.keyCode : event.which);
+                          if(keycode == '13'){
+                              console.log('You pressed a "enter" key in textbox');
+                              sorty();
+                          }
+                          //Stop the event from propogation to other handlers
+                          //If this line will be removed, then keypress event handler attached
+                          //at document level will also be triggered
+                          event.stopPropagation();
+                      })
+                  });
+
+                  // $("ul.items.things li")[0].style.display = "none"
+              </script>
+          </sd-tab>
+
+        </sd-tabs>
+
+      </sd-area>
+
+      <sd-area label="Details"
+               position="left">
+
+        <sd-tabs>
+          <sd-tab label="Details">
+            <sd-current-thing-info></sd-current-thing-info>
+          </sd-tab>
+
+        </sd-tabs>
+
+      </sd-area>
+    </div>
+    <div class="areas-right"
+         ng-hide="sideVM.isHidden('right')"
+         ng-class="sideVM.isHidden('left') ? 'col-sm-12':'col-sm-6 col-md-7 col-lg-8'">
+      <sd-area label="Map"
+               position="right">
+
+        <sd-tabs>
+          <sd-tab label="Map">
+            <sd-current-subjects-map></sd-current-subjects-map>
+          </sd-tab>
+          <!--<sd-tab label="Things">-->
+            <!--<sd-current-things></sd-current-things>-->
+          <!--</sd-tab>-->
+          <!--<sd-tab label="Images">-->
+            <!--<sd-current-images></sd-current-images>-->
+          <!--</sd-tab>-->
+          <!--<sd-tab label="Thing">-->
+              <!--<sd-current-thing-info></sd-current-thing-info>-->
+          <!--</sd-tab>-->
+          <!--<sd-tab label="Image">-->
+              <!--<sd-current-image-viewer name="map-area"-->
+                                       <!--min-width="800">-->
+              <!--</sd-current-image-viewer>-->
+          <!--</sd-tab>-->
+        </sd-tabs>
+
+      </sd-area>
+    </div> 
+  </sd-areas>
+</div>
